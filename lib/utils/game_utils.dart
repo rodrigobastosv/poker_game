@@ -51,6 +51,7 @@ bool cardMakesPair(CardModel card, BoardModel board) {
 bool canMakeAPair(HandModel hand, BoardModel board) {
   int numberOfPairs = 0;
   final mapValuesOcurrences = _getValueOcurrencesMap(hand, board);
+  print(mapValuesOcurrences);
   if (mapValuesOcurrences[0] == 2) numberOfPairs++;
   if (mapValuesOcurrences[1] == 2) numberOfPairs++;
   if (mapValuesOcurrences[2] == 2) numberOfPairs++;
@@ -65,6 +66,24 @@ bool canMakeAPair(HandModel hand, BoardModel board) {
   if (mapValuesOcurrences[11] == 2) numberOfPairs++;
   if (mapValuesOcurrences[12] == 2) numberOfPairs++;
   return numberOfPairs == 1;
+}
+
+int findWhatsThePair(HandModel hand, BoardModel board) {
+  final mapValuesOcurrences = _getValueOcurrencesMap(hand, board);
+  if (mapValuesOcurrences[1] == 2) return 1;
+  if (mapValuesOcurrences[2] == 2) return 2;
+  if (mapValuesOcurrences[3] == 2) return 3;
+  if (mapValuesOcurrences[4] == 2) return 4;
+  if (mapValuesOcurrences[5] == 2) return 5;
+  if (mapValuesOcurrences[6] == 2) return 6;
+  if (mapValuesOcurrences[7] == 2) return 7;
+  if (mapValuesOcurrences[8] == 2) return 8;
+  if (mapValuesOcurrences[9] == 2) return 9;
+  if (mapValuesOcurrences[10] == 2) return 10;
+  if (mapValuesOcurrences[11] == 2) return 11;
+  if (mapValuesOcurrences[12] == 2) return 12;
+  if (mapValuesOcurrences[13] == 2) return 13;
+  return -1;
 }
 
 bool canMakeTwoPairs(HandModel hand, BoardModel board) {
@@ -228,6 +247,11 @@ int getHighestCardOfHand(HandModel hand) {
   final firstValue = firstCard.value;
   final secondValue = secondCard.value;
 
+  if (firstValue == 1) {
+    return firstValue;
+  } else if (secondValue == 1) {
+    return secondValue;
+  }
   return firstValue > secondValue ? firstValue : secondValue;
 }
 

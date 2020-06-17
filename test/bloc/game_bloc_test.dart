@@ -389,12 +389,32 @@ void main() {
 
       test('player one should win with a high card', () {
         gameBloc.playerOneHand = HandModel(cards: [
+          CardModel.aceOfClubs(),
+          CardModel.twoOfClubs(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
           CardModel.twoOfHearts(),
           CardModel.thirteenOfClubs(),
         ]);
-        gameBloc.playerTwoHand = HandModel(cards: [
-          CardModel.aceOfClubs(),
+        gameBloc.firstDrawedCard = CardModel.fiveOfSpades();
+        gameBloc.secondDrawedCard = CardModel.sevenOfDiamonds();
+        gameBloc.thirdDrawedCard = CardModel.nineOfClubs();
+        gameBloc.fourthDrawedCard = CardModel.tenOfSpades();
+        gameBloc.fifthDrawedCard = CardModel.elevenOfHearts();
+        final results = gameBloc.calculateResults();
+        expect(results['result'].highestCard, 1);
+        expect(results['hand'], 'Carta mais Alta');
+        expect(results['winner'], gameBloc.playerOne);
+      });
+
+      test('player one should win with a high card that is not ace', () {
+        gameBloc.playerOneHand = HandModel(cards: [
+          CardModel.thirteenOfClubs(),
           CardModel.twoOfClubs(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
+          CardModel.twoOfHearts(),
+          CardModel.threeOfSpades(),
         ]);
         gameBloc.firstDrawedCard = CardModel.fiveOfSpades();
         gameBloc.secondDrawedCard = CardModel.sevenOfDiamonds();
@@ -409,12 +429,32 @@ void main() {
 
       test('player two should win with a high card', () {
         gameBloc.playerOneHand = HandModel(cards: [
+          CardModel.twoOfHearts(),
+          CardModel.thirteenOfClubs(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
           CardModel.aceOfClubs(),
           CardModel.twoOfClubs(),
         ]);
-        gameBloc.playerTwoHand = HandModel(cards: [
+        gameBloc.firstDrawedCard = CardModel.fiveOfSpades();
+        gameBloc.secondDrawedCard = CardModel.sevenOfDiamonds();
+        gameBloc.thirdDrawedCard = CardModel.nineOfClubs();
+        gameBloc.fourthDrawedCard = CardModel.tenOfSpades();
+        gameBloc.fifthDrawedCard = CardModel.elevenOfHearts();
+        final results = gameBloc.calculateResults();
+        expect(results['result'].highestCard, 1);
+        expect(results['hand'], 'Carta mais Alta');
+        expect(results['winner'], gameBloc.playerTwo);
+      });
+
+      test('player two should win with a high card that is not ace', () {
+        gameBloc.playerOneHand = HandModel(cards: [
           CardModel.twoOfHearts(),
+          CardModel.threeOfSpades(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
           CardModel.thirteenOfClubs(),
+          CardModel.twoOfClubs(),
         ]);
         gameBloc.firstDrawedCard = CardModel.fiveOfSpades();
         gameBloc.secondDrawedCard = CardModel.sevenOfDiamonds();
@@ -535,36 +575,138 @@ void main() {
         expect(results['winner'], gameBloc.playerTwo);
       });
 
-      test('''player one should win with a straight with a hand 
+      test('''player two should win with a higher card with a hand 
         [
-          4  - hearts
           9  - hearts
+          1  - spades
         ]
         and the board 
         [
-          1  - diamonds
-          5  - hearts
-          3  - spades
-          2  - diamonds
-          3  - hearts
+          5   - hearts
+          5   - spades
+          12  - diamonds
+          7  - hearts
+          7  - spades
         ]
         ''', () {
         gameBloc.playerOneHand = HandModel(cards: [
-          CardModel.fourOfHearts(),
-          CardModel.nineOfHearts(),
+          CardModel.sixOfSpades(),
+          CardModel.elevenOfHearts(),
         ]);
         gameBloc.playerTwoHand = HandModel(cards: [
-          CardModel.sixOfDiamonds(),
-          CardModel.elevenOfSpades(),
+          CardModel.nineOfHearts(),
+          CardModel.aceOfSpades(),
         ]);
-        gameBloc.firstDrawedCard = CardModel.aceOfDiamonds();
-        gameBloc.secondDrawedCard = CardModel.fiveOfHearts();
-        gameBloc.thirdDrawedCard = CardModel.threeOfSpades();
-        gameBloc.fourthDrawedCard = CardModel.twoOfDiamonds();
-        gameBloc.fifthDrawedCard = CardModel.threeOfHearts();
+        gameBloc.firstDrawedCard = CardModel.fiveOfHearts();
+        gameBloc.secondDrawedCard = CardModel.fiveOfSpades();
+        gameBloc.thirdDrawedCard = CardModel.twelveOfDiamonds();
+        gameBloc.fourthDrawedCard = CardModel.sevenOfHearts();
+        gameBloc.fifthDrawedCard = CardModel.sevenOfSpades();
         final results = gameBloc.calculateResults();
-        expect(results['result'].hasSequence, true);
-        expect(results['hand'], 'Sequência');
+        expect(results['result'].highestCard, 1);
+        expect(results['hand'], 'Carta mais Alta');
+        expect(results['winner'], gameBloc.playerTwo);
+      });
+
+      test('''player one should win because has a higher pair with a hand 
+        [
+          12  - hearts
+          10  - hearts
+        ]
+        and the board 
+        [
+          5  - hearts
+          7  - hearts
+          6  - spades
+          12 - spades
+          11 - spades
+        ]
+        ''', () {
+        gameBloc.playerOneHand = HandModel(cards: [
+          CardModel.twelveOfHearts(),
+          CardModel.tenOfHearts(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
+          CardModel.aceOfSpades(),
+          CardModel.sevenOfDiamonds(),
+        ]);
+        gameBloc.firstDrawedCard = CardModel.fiveOfHearts();
+        gameBloc.secondDrawedCard = CardModel.sevenOfHearts();
+        gameBloc.thirdDrawedCard = CardModel.sixOfSpades();
+        gameBloc.fourthDrawedCard = CardModel.twelveOfSpades();
+        gameBloc.fifthDrawedCard = CardModel.elevenOfSpades();
+        final results = gameBloc.calculateResults();
+        expect(results['result'].hasOnePair, true);
+        expect(results['result'].pairOf, 12);
+        expect(results['hand'], 'Um Par');
+        expect(results['winner'], gameBloc.playerOne);
+      });
+
+      test('''player two should win because has a higher pair with a hand 
+        [
+          12  - hearts
+          10  - hearts
+        ]
+        and the board 
+        [
+          5  - hearts
+          7  - hearts
+          6  - spades
+          12 - spades
+          11 - spades
+        ]
+        ''', () {
+        gameBloc.playerOneHand = HandModel(cards: [
+          CardModel.aceOfSpades(),
+          CardModel.sevenOfDiamonds(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
+          CardModel.twelveOfHearts(),
+          CardModel.tenOfHearts(),
+        ]);
+        gameBloc.firstDrawedCard = CardModel.fiveOfHearts();
+        gameBloc.secondDrawedCard = CardModel.sevenOfHearts();
+        gameBloc.thirdDrawedCard = CardModel.sixOfSpades();
+        gameBloc.fourthDrawedCard = CardModel.twelveOfSpades();
+        gameBloc.fifthDrawedCard = CardModel.elevenOfSpades();
+        final results = gameBloc.calculateResults();
+        expect(results['result'].hasOnePair, true);
+        expect(results['result'].pairOf, 12);
+        expect(results['hand'], 'Um Par');
+        expect(results['winner'], gameBloc.playerTwo);
+      });
+
+      test('''player one should win because has a higher pair with a hand 
+        [
+          1  - diamonds
+          1  - spades
+        ]
+        and the board 
+        [
+          5  - diamonds
+          9  - spades
+          4  - diamonds
+          7  - hearts
+          7  - clubs
+        ]
+        ''', () {
+        gameBloc.playerOneHand = HandModel(cards: [
+          CardModel.aceOfDiamonds(),
+          CardModel.aceOfSpades(),
+        ]);
+        gameBloc.playerTwoHand = HandModel(cards: [
+          CardModel.threeOfDiamonds(),
+          CardModel.fourOfSpades(),
+        ]);
+        gameBloc.firstDrawedCard = CardModel.fiveOfDiamonds();
+        gameBloc.secondDrawedCard = CardModel.nineOfSpades();
+        gameBloc.thirdDrawedCard = CardModel.fourOfDiamonds();
+        gameBloc.fourthDrawedCard = CardModel.sevenOfHearts();
+        gameBloc.fifthDrawedCard = CardModel.sevenOfClubs();
+        final results = gameBloc.calculateResults();
+        expect(results['result'].hasTwoPairs, true);
+        expect(results['result'].pairOf, 1);
+        expect(results['hand'], 'Um Par');
         expect(results['winner'], gameBloc.playerOne);
       });
     });

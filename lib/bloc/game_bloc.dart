@@ -136,7 +136,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   Map<String, dynamic> calculateResults() {
     final playerOneHasAPair = canMakeAPair(playerOneHand, board);
+    print(playerOneHasAPair);
     final playerTwoHasAPair = canMakeAPair(playerTwoHand, board);
+    print(playerTwoHasAPair);
 
     final playerOneHasTwoPairs = canMakeTwoPairs(playerOneHand, board);
     final playerTwoHasTwoPairs = canMakeTwoPairs(playerTwoHand, board);
@@ -169,6 +171,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final playerOneResult = ResultModel(
       highestCard: getHighestCardOfHand(playerOneHand),
       hasOnePair: playerOneHasAPair,
+      pairOf: findWhatsThePair(playerOneHand, board),
       hasTwoPairs: playerOneHasTwoPairs,
       hasThreeCards: playerOneHasAThird,
       hasSequence: playerOneCanMakeSequence,
@@ -181,6 +184,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final playerTwoResult = ResultModel(
       highestCard: getHighestCardOfHand(playerTwoHand),
       hasOnePair: playerTwoHasAPair,
+      pairOf: findWhatsThePair(playerTwoHand, board),
       hasTwoPairs: playerTwoHasTwoPairs,
       hasThreeCards: playerTwoHasAThird,
       hasSequence: playerTwoCanMakeSequence,
@@ -310,6 +314,34 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         'winner': playerTwo,
         'hand': 'Dois Pares',
       };
+    } else if (playerOneResult.hasTwoPairs && playerTwoResult.hasTwoPairs) {
+      if (playerOneResult.pairOf == 1) {
+        return {
+          'result': playerOneResult,
+          'winner': playerOne,
+          'hand': 'Um Par',
+        };
+      } else if (playerTwoResult.pairOf == 1) {
+        return {
+          'result': playerTwoResult,
+          'winner': playerTwo,
+          'hand': 'Um Par',
+        };
+      }
+
+      if (playerOneResult.pairOf > playerTwoResult.pairOf) {
+        return {
+          'result': playerOneResult,
+          'winner': playerOne,
+          'hand': 'Um Par',
+        };
+      } else {
+        return {
+          'result': playerTwoResult,
+          'winner': playerOne,
+          'hand': 'Um Par',
+        };
+      }
     }
 
     if (playerOneResult.hasOnePair && !playerTwoResult.hasOnePair) {
@@ -323,6 +355,48 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         'result': playerTwoResult,
         'winner': playerTwo,
         'hand': 'Um Par',
+      };
+    } else if (playerOneResult.hasOnePair && playerTwoResult.hasOnePair) {
+      if (playerOneResult.pairOf == 1) {
+        return {
+          'result': playerOneResult,
+          'winner': playerOne,
+          'hand': 'Um Par',
+        };
+      } else if (playerTwoResult.pairOf == 1) {
+        return {
+          'result': playerTwoResult,
+          'winner': playerTwo,
+          'hand': 'Um Par',
+        };
+      }
+
+      if (playerOneResult.pairOf > playerTwoResult.pairOf) {
+        return {
+          'result': playerOneResult,
+          'winner': playerOne,
+          'hand': 'Um Par',
+        };
+      } else {
+        return {
+          'result': playerTwoResult,
+          'winner': playerOne,
+          'hand': 'Um Par',
+        };
+      }
+    }
+
+    if (playerOneResult.highestCard == 1) {
+      return {
+        'result': playerOneResult,
+        'winner': playerOne,
+        'hand': 'Carta mais Alta',
+      };
+    } else if (playerTwoResult.highestCard == 1) {
+      return {
+        'result': playerTwoResult,
+        'winner': playerTwo,
+        'hand': 'Carta mais Alta',
       };
     }
 

@@ -1,6 +1,7 @@
 class ResultModel {
   ResultModel({
     this.hasOnePair,
+    this.pairOf,
     this.hasTwoPairs,
     this.hasThreeCards,
     this.hasSequence,
@@ -13,6 +14,7 @@ class ResultModel {
   });
 
   final bool hasOnePair;
+  final int pairOf;
   final bool hasTwoPairs;
   final bool hasThreeCards;
   final bool hasSequence;
