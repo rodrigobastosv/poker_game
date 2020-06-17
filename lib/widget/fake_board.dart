@@ -276,6 +276,7 @@ class _FakeBoardState extends State<FakeBoard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: const ValueKey('fake-board'),
       color: Color(0xFF35654d),
       child: Padding(
         padding: const EdgeInsets.all(18),
@@ -330,6 +331,7 @@ class _FakeBoardState extends State<FakeBoard> {
             ),
             const SizedBox(height: 12),
             Row(
+              key: ValueKey('row'),
               children: <Widget>[
                 PokerBackCard(key: deckKey),
                 const SizedBox(width: 16),

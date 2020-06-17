@@ -132,12 +132,15 @@ bool canMakeSequence(HandModel hand, BoardModel board) {
   }
   final firstIndex = comparatorValues.indexWhere((v) => v == 1);
   if (firstIndex <= 2 && firstIndex != -1) {
-    final sum = values[firstIndex] +
-        values[firstIndex + 1] +
-        values[firstIndex + 2] +
-        values[firstIndex + 3] +
-        values[firstIndex + 4];
-    return sum == 5;
+    if (comparatorValues[firstIndex] == 0 ||
+        comparatorValues[firstIndex + 1] == 0 ||
+        comparatorValues[firstIndex + 2] == 0 ||
+        comparatorValues[firstIndex + 3] == 0) return false;
+    final sum = comparatorValues[firstIndex] +
+        comparatorValues[firstIndex + 1] +
+        comparatorValues[firstIndex + 2] +
+        comparatorValues[firstIndex + 3];
+    return sum == 4;
   }
   return false;
 }
@@ -203,6 +206,20 @@ bool canMakeAFourth(HandModel hand, BoardModel board) {
       mapValuesOcurrences[10] == 4 ||
       mapValuesOcurrences[11] == 4 ||
       mapValuesOcurrences[12] == 4;
+}
+
+bool canMakeStraightFlush(HandModel hand, BoardModel board) {
+  return canMakeSequence(hand, board) && canMakeFlush(hand, board);
+}
+
+bool canMakeRoyalStraightFlush(HandModel hand, BoardModel board) {
+  final mapValuesOcurrences = _getValueOcurrencesMap(hand, board);
+  return canMakeFlush(hand, board) &&
+      mapValuesOcurrences[8] == 1 &&
+      mapValuesOcurrences[9] == 1 &&
+      mapValuesOcurrences[10] == 1 &&
+      mapValuesOcurrences[11] == 1 &&
+      mapValuesOcurrences[12] == 1;
 }
 
 int getHighestCardOfHand(HandModel hand) {

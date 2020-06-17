@@ -12,6 +12,6 @@ class HandModel extends Equatable {
 
   @override
   String toString() {
-    return 'Hand{cards: $cards}';
+    return 'HandModel{cards: $cards}';
   }
 }

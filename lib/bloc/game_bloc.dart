@@ -77,7 +77,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     }
     if (event is EndGame) {
-      final results = _calculateResults();
+      final results = calculateResults();
       yield WinningPlayerAnnounced(results);
     }
   }
@@ -134,7 +134,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     return card;
   }
 
-  Map<String, dynamic> _calculateResults() {
+  Map<String, dynamic> calculateResults() {
     final playerOneHasAPair = canMakeAPair(playerOneHand, board);
     final playerTwoHasAPair = canMakeAPair(playerTwoHand, board);
 
@@ -150,11 +150,21 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final playerOneCanMakeFlush = canMakeFlush(playerOneHand, board);
     final playerTwoCanMakeFlush = canMakeFlush(playerTwoHand, board);
 
-    final playerOneCanMakeFullHouse = canMakeFlush(playerOneHand, board);
-    final playerTwoCanMakeFullHouse = canMakeFlush(playerTwoHand, board);
+    final playerOneCanMakeFullHouse = canMakeFullHouse(playerOneHand, board);
+    final playerTwoCanMakeFullHouse = canMakeFullHouse(playerTwoHand, board);
 
     final playerOneCanMakeAFourth = canMakeAFourth(playerOneHand, board);
     final playerTwoCanMakeAFourth = canMakeAFourth(playerTwoHand, board);
+
+    final playerOneCanMakeStraightFlush =
+        canMakeStraightFlush(playerOneHand, board);
+    final playerTwoCanMakeStraightFlush =
+        canMakeStraightFlush(playerTwoHand, board);
+
+    final playerOneCanMakeRoyalStraightFlush =
+        canMakeRoyalStraightFlush(playerOneHand, board);
+    final playerTwoCanMakeRoyalStraightFlush =
+        canMakeRoyalStraightFlush(playerTwoHand, board);
 
     final playerOneResult = ResultModel(
       highestCard: getHighestCardOfHand(playerOneHand),
@@ -165,8 +175,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       hasFlush: playerOneCanMakeFlush,
       hasFullHouse: playerOneCanMakeFullHouse,
       hasFourCards: playerOneCanMakeAFourth,
-      hasStraightFlush: false,
-      hasRoyalStraightFlush: false,
+      hasStraightFlush: playerOneCanMakeStraightFlush,
+      hasRoyalStraightFlush: playerOneCanMakeRoyalStraightFlush,
     );
     final playerTwoResult = ResultModel(
       highestCard: getHighestCardOfHand(playerTwoHand),
@@ -177,8 +187,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       hasFlush: playerTwoCanMakeFlush,
       hasFullHouse: playerTwoCanMakeFullHouse,
       hasFourCards: playerTwoCanMakeAFourth,
-      hasStraightFlush: false,
-      hasRoyalStraightFlush: false,
+      hasStraightFlush: playerTwoCanMakeStraightFlush,
+      hasRoyalStraightFlush: playerTwoCanMakeRoyalStraightFlush,
     );
 
     return _decideBestResult(playerOneResult, playerTwoResult);

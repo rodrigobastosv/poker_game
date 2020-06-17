@@ -42,6 +42,7 @@ class InitialPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(38),
                       child: RaisedButton(
+                        key: const ValueKey('iniciar-btn'),
                         onPressed: () => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (_) => BoardPageConnected(),
@@ -54,6 +55,7 @@ class InitialPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(38),
                       child: RaisedButton(
+                        key: const ValueKey('tutorial-btn'),
                         onPressed: () => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (_) => TutorialPage(),
