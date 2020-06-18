@@ -1,16 +1,25 @@
-# pokergame
+# Poker Game
 
-A new Flutter application.
+[![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
 
-## Getting Started
+Aplicativo criado para simular uma partida de Poker.
 
-This project is a starting point for a Flutter application.
+- Para gerência de estado foi utilizado o [flutter_bloc](https://pub.dev/packages/flutter_bloc).
 
-A few resources to get you started if this is your first Flutter project:
+Este projeto possui:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- 💪 **Testes de Unidade**
+- 💪 **Testes de Widgets**
+- 💪 **Testes de Integração**
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Rodando o aplicativo
+Para rodar o aplicativo é só dar um `flutter run` no diretório raiz
+
+## Rodando os Testes de Unidade/Widgets
+Para rodar os testes unitários e de widgets, basta executar o script `runTests.sh` dentro do diretório scripts. 
+
+## Rodando os Testes de Unidade/Widgets
+Para rodar os testes de integração basta executar o script `runTestsDriver.sh` dentro do diretório scripts. 
+
+## Todo
+ - [ ] Alguns corner cases de alguns resultados não estão sendo corretamente decididos.
