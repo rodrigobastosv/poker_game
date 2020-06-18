@@ -51,7 +51,6 @@ bool cardMakesPair(CardModel card, BoardModel board) {
 bool canMakeAPair(HandModel hand, BoardModel board) {
   int numberOfPairs = 0;
   final mapValuesOcurrences = _getValueOcurrencesMap(hand, board);
-  print(mapValuesOcurrences);
   if (mapValuesOcurrences[0] == 2) numberOfPairs++;
   if (mapValuesOcurrences[1] == 2) numberOfPairs++;
   if (mapValuesOcurrences[2] == 2) numberOfPairs++;

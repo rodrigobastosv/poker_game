@@ -136,9 +136,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   Map<String, dynamic> calculateResults() {
     final playerOneHasAPair = canMakeAPair(playerOneHand, board);
-    print(playerOneHasAPair);
     final playerTwoHasAPair = canMakeAPair(playerTwoHand, board);
-    print(playerTwoHasAPair);
 
     final playerOneHasTwoPairs = canMakeTwoPairs(playerOneHand, board);
     final playerTwoHasTwoPairs = canMakeTwoPairs(playerTwoHand, board);
@@ -319,13 +317,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         return {
           'result': playerOneResult,
           'winner': playerOne,
-          'hand': 'Um Par',
+          'hand': 'Dois Pares',
         };
       } else if (playerTwoResult.pairOf == 1) {
         return {
           'result': playerTwoResult,
           'winner': playerTwo,
-          'hand': 'Um Par',
+          'hand': 'Dois Pares',
         };
       }
 
@@ -333,13 +331,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         return {
           'result': playerOneResult,
           'winner': playerOne,
-          'hand': 'Um Par',
+          'hand': 'Dois Pares',
         };
       } else {
         return {
           'result': playerTwoResult,
-          'winner': playerOne,
-          'hand': 'Um Par',
+          'winner': playerTwo,
+          'hand': 'Dois Pares',
         };
       }
     }
@@ -380,7 +378,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       } else {
         return {
           'result': playerTwoResult,
-          'winner': playerOne,
+          'winner': playerTwo,
           'hand': 'Um Par',
         };
       }
